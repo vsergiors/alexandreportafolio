@@ -16,8 +16,8 @@
     --panel-light:#ffffff55;
     --grass:#5d8c3f;
     --grass-light:#7fba3d;
-    --dirt:#6a4a30;
-    --dirt-dark:#3f2d1c;
+    --fire:#ff5a1f;
+    --fire-deep:#b3220f;
     --diamond:#55e6e6;
     --gold:#ffcc4d;
     --yellow:#ffe14d;
@@ -98,7 +98,7 @@
   }
   .grass-block{
     width:22px; height:22px; flex-shrink:0;
-    background:linear-gradient(180deg, var(--grass-light) 0 30%, var(--dirt) 30% 100%);
+    background:linear-gradient(180deg, var(--grass-light) 0 30%, var(--fire) 30% 65%, var(--fire-deep) 65% 100%);
     box-shadow: inset 3px 3px 0 #ffffff33, inset -3px -3px 0 #00000055;
   }
   nav ul{ display:flex; gap:6px; list-style:none; }
@@ -136,7 +136,7 @@
     font-family:var(--font-pixel);
     font-size:clamp(28px,7vw,54px);
     color:#fff;
-    text-shadow: 4px 4px 0 var(--dirt-dark);
+    text-shadow: 4px 4px 0 var(--fire-deep);
     letter-spacing:2px;
   }
   .hero-sub{
@@ -188,7 +188,7 @@
     width:30px; height:30px; flex-shrink:0;
     box-shadow: inset 2px 2px 0 #ffffff40, inset -2px -2px 0 #00000060;
   }
-  .icon-book{ background:linear-gradient(135deg, #b3521a 45%, #eee 45%); }
+  .icon-book{ background:linear-gradient(135deg, var(--fire) 45%, #eee 45%); }
   .icon-quill{ background:linear-gradient(135deg,#444 40%, var(--gold) 40%); }
   .icon-star{ background:radial-gradient(circle at 40% 40%, var(--gold), #a67c00); }
   .icon-anvil{ background:linear-gradient(180deg,#7a7a7a 0 60%, #3a3a3a 60%); }
@@ -210,6 +210,7 @@
     background:var(--grass-light);
   }
   .svc-card:nth-child(even)::before{ background:var(--yellow); }
+  .svc-card.fire::before{ background:var(--fire) !important; }
   .svc-card h4{
     font-family:var(--font-pixel); font-size:14px; margin-bottom:10px; color:#fff;
   }
@@ -251,7 +252,7 @@
 <body>
 
 <nav>
-  <div class="logo"><span class="grass-block"></span> ALEXANDER</div>
+  <div class="logo">ALEXANDER</div>
   <ul>
     <li><button class="navlink active" data-page="inicio" onclick="showPage('inicio', this)">INICIO</button></li>
     <li><button class="navlink" data-page="experiencia" onclick="showPage('experiencia', this)">EXPERIENCIA</button></li>
@@ -264,7 +265,7 @@
   <div class="avatar-stack">
     <div class="voxel" style="background:#5d8c3f"></div>
     <div class="voxel" style="background:#3a6b26"></div>
-    <div class="voxel" style="background:#6a4a30"></div>
+    <div class="voxel" style="background:#ff5a1f"></div>
     <div class="voxel" style="background:#55e6e6"></div>
     <div class="voxel" style="background:#ffcc4d"></div>
   </div>
@@ -280,27 +281,22 @@
 <section id="experiencia" class="page">
   <div class="sec-title">EXPERIENCIA</div>
   <p class="sec-desc">Historial trabajando como developer, founder y colaborador en distintos servidores, estudios y networks.</p>
+  <h3 style="font-family:var(--font-pixel); font-size:13px; color:var(--diamond); margin-bottom:14px;">SERVIDORES</h3>
   <div class="exp-grid">
-    <div class="exp-group">
-      <h3>SERVIDORES</h3>
       <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Venifly</span><span class="item-role">Dev (cerrado)</span></div>
       <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Minefark</span><span class="item-role">Colaborador</span></div>
       <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">La Jerarquía</span><span class="item-role">Dev</span></div>
       <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">MineSkys</span><span class="item-role">Dev</span></div>
       <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Horizon Network</span><span class="item-role">Dev</span></div>
       <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">Hydroxmc</span><span class="item-role founder">Founder</span></div>
-    </div>
-    <div class="exp-group">
-      <h3>ESTUDIOS / NETWORKS</h3>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">Mineblash</span><span class="item-role">Developer</span></div>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">Infernium</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Mineblash</span><span class="item-role">Developer</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Infernium</span><span class="item-role">Dev</span></div>
       <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">Voltium</span><span class="item-role founder">Founder</span></div>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">Valkirian</span><span class="item-role">Dev</span></div>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">FishMC</span><span class="item-role">Dev</span></div>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">OrtiMC</span><span class="item-role">Dev</span></div>
-      <div class="item-row"><span class="item-icon icon-quill"></span><span class="item-name">RotiumMC</span><span class="item-role">Developer</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Valkirian</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">FishMC</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">OrtiMC</span><span class="item-role founder">Founder</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">RotiumMC</span><span class="item-role">Developer</span></div>
       <div class="item-row"><span class="item-icon icon-anvil"></span><span class="item-name">VoidMc</span><span class="item-role">Developer</span></div>
-    </div>
   </div>
 </section>
 
@@ -327,6 +323,18 @@
     <div class="svc-card wide">
       <h4>ORTIMC NETWORK — IDENTIDAD DE NETWORK</h4>
       <p>Conexión completa de la network, configuración del MOTD, logo y demás ajustes de marca en el server list.</p>
+      <ul>
+        <li>Menús</li>
+        <li>Optimización</li>
+        <li>Configuración de cualquier plugin</li>
+      </ul>
+    </div>
+    <div class="svc-card wide fire" style="border-color:var(--fire);">
+      <h4 style="color:var(--fire);">FULLPVP CUSTOM — CASO DE ÉXITO 🔥</h4>
+      <p>Un FullPvP custom con mobs personalizados e integraciones poco comunes en este tipo de modalidad. Superó las <strong style="color:var(--yellow);">1.3K descargas</strong> y a día de hoy sigue siendo usado por muchos servidores.</p>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">Mobs custom</span>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">Integraciones únicas</span>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">+1.3K descargas</span>
     </div>
     <div class="svc-card wide">
       <h4>HORIZON NETWORK — OPTIMIZACIÓN</h4>
