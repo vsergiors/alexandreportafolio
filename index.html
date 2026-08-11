@@ -31,9 +31,367 @@
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--bg);
     color:var(--text);
     font-family:var(--font-body);
+    font-size:20px;
+    line-height:1.5;
+    image-rendering:pixelated;
+    overflow-x:hidden;
+    background-color:var(--bg);
+    background-image:
+      repeating-linear-gradient(0deg, transparent 0 38px, rgba(0,0,0,0.12) 38px 40px),
+      repeating-linear-gradient(90deg, transparent 0 38px, rgba(0,0,0,0.12) 38px 40px),
+      linear-gradient(160deg, var(--fire-deep) 0%, var(--fire) 45%, #ff9a1f 75%, #ffb347 100%);
+    background-attachment:fixed;
+    background-size:40px 40px, 40px 40px, 100% 100%;
+  }
+  ::selection{background:var(--grass); color:#fff;}
+
+  a{color:inherit; text-decoration:none;}
+
+  /* ---------- Minecraft button (raised bevel) ---------- */
+  .mc-btn{
+    font-family:var(--font-pixel);
+    font-size:13px;
+    color:#fff;
+    background:var(--panel);
+    border:none;
+    padding:14px 22px;
+    cursor:pointer;
+    box-shadow:
+      inset 2px 2px 0 var(--panel-light),
+      inset -3px -3px 0 var(--panel-shadow);
+    text-shadow: 2px 2px 0 #000a;
+    transition:transform .05s;
+  }
+  .mc-btn:hover{ filter:brightness(1.12); }
+  .mc-btn:active{
+    box-shadow:
+      inset -2px -2px 0 var(--panel-light),
+      inset 3px 3px 0 var(--panel-shadow);
+    transform:translateY(1px);
+  }
+  .mc-btn.green{ background:var(--grass-light); }
+  .mc-btn.diamond{ background:var(--diamond); color:#053; }
+  .mc-btn.yellow{ background:var(--yellow); color:#3a2c00; }
+
+  /* ---------- Slot (inset socket, like inventory cell) ---------- */
+  .slot{
+    background:#8b8b8b;
+    box-shadow:
+      inset 2px 2px 0 var(--panel-shadow),
+      inset -2px -2px 0 var(--panel-light);
+  }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    background:var(--bg-deep);
+    border-bottom:4px solid var(--panel-shadow);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 22px;
+  }
+  nav .logo{
+    font-family:var(--font-pixel); font-size:13px; color:var(--grass-light);
+    display:flex; align-items:center; gap:10px;
+  }
+  .grass-block{
+    width:22px; height:22px; flex-shrink:0;
+    background:linear-gradient(180deg, var(--grass-light) 0 30%, var(--fire) 30% 65%, var(--fire-deep) 65% 100%);
+    box-shadow: inset 3px 3px 0 #ffffff33, inset -3px -3px 0 #00000055;
+  }
+  nav ul{ display:flex; gap:6px; list-style:none; }
+  nav button.navlink{
+    font-family:var(--font-pixel); font-size:10px;
+    padding:8px 10px; color:var(--text-dim);
+    border:2px solid transparent;
+    background:none; cursor:pointer;
+  }
+  nav button.navlink:hover{ color:#fff; border-color:var(--panel-shadow); background:#ffffff0d; }
+  nav button.navlink.active{
+    color:#1a1400; background:var(--yellow);
+    border-color:var(--yellow-deep);
+    box-shadow: inset 2px 2px 0 #ffffff70, inset -2px -2px 0 var(--yellow-deep);
+  }
+
+  /* ---------- Pages (secciones que se comportan como "htmls" distintos) ---------- */
+  .page{ display:none; animation: pageIn .25s ease; }
+  .page.active{ display:block; }
+  @keyframes pageIn{ from{ opacity:0; transform:translateY(8px);} to{ opacity:1; transform:translateY(0);} }
+
+  section{ padding:110px 20px 40px; max-width:980px; margin:0 auto; }
+
+  /* ---------- Hero ---------- */
+  #inicio{
+    min-height:92vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding-top:70px;
+  }
+  .avatar-stack{ display:flex; gap:6px; margin-bottom:30px; }
+  .voxel{
+    width:16px; height:16px;
+    box-shadow: inset 2px 2px 0 #ffffff40, inset -2px -2px 0 #00000050;
+  }
+  .hero-title{
+    font-family:var(--font-pixel);
+    font-size:clamp(28px,7vw,54px);
+    color:#fff;
+    text-shadow: 4px 4px 0 var(--fire-deep);
+    letter-spacing:2px;
+  }
+  .hero-sub{
+    margin-top:16px;
+    font-size:26px;
+    color:var(--yellow);
+    background:#00000055;
+    padding:6px 18px;
+    border:2px solid var(--yellow-deep);
+  }
+  .hero-tagline{
+    margin-top:22px; max-width:560px; color:var(--text-dim); font-size:20px;
+  }
+  .hero-actions{ margin-top:34px; display:flex; gap:14px; flex-wrap:wrap; justify-content:center; }
+
+  /* ---------- Section heading ---------- */
+  .sec-title{
+    font-family:var(--font-pixel);
+    font-size:22px;
+    color:var(--gold);
+    text-shadow:2px 2px 0 #000;
+    margin-bottom:8px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .sec-title::before{
+    content:'';
+    width:14px; height:14px;
+    background:var(--diamond);
+    box-shadow: inset 2px 2px 0 #ffffff70, inset -2px -2px 0 #00000060;
+    display:inline-block;
+  }
+  .sec-desc{ color:var(--text-dim); margin-bottom:30px; max-width:640px; }
+
+  /* ---------- Experience: inventory rows ---------- */
+  .exp-grid{ display:grid; grid-template-columns:1fr 1fr; gap:34px; }
+  @media(max-width:720px){ .exp-grid{ grid-template-columns:1fr; } }
+  .exp-group h3{
+    font-family:var(--font-pixel); font-size:13px; color:var(--diamond);
+    margin-bottom:14px;
+  }
+  .item-row{
+    display:flex; align-items:center; gap:12px;
+    padding:10px 12px; margin-bottom:8px;
+    background:#1c1a19;
+    border:2px solid var(--panel-shadow);
+  }
+  .item-row:hover{ border-color:var(--grass-light); background:#22201d; }
+  .item-icon{
+    width:30px; height:30px; flex-shrink:0;
+    box-shadow: inset 2px 2px 0 #ffffff40, inset -2px -2px 0 #00000060;
+  }
+  .icon-book{ background:linear-gradient(135deg, var(--fire) 45%, #eee 45%); }
+  .icon-quill{ background:linear-gradient(135deg,#444 40%, var(--gold) 40%); }
+  .icon-star{ background:radial-gradient(circle at 40% 40%, var(--gold), #a67c00); }
+  .icon-anvil{ background:linear-gradient(180deg,#7a7a7a 0 60%, #3a3a3a 60%); }
+  .item-name{ font-size:19px; }
+  .item-role{ font-size:16px; color:var(--text-dim); margin-left:auto; white-space:nowrap; }
+  .item-role.founder{ color:var(--gold); }
+
+  /* ---------- Services / setups grid ---------- */
+  .svc-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+  @media(max-width:720px){ .svc-grid{ grid-template-columns:1fr; } }
+  .svc-card{
+    background:#1c1a19;
+    border:3px solid var(--panel-shadow);
+    padding:20px;
+    position:relative;
+  }
+  .svc-card::before{
+    content:''; position:absolute; top:-3px; left:-3px; right:-3px; height:6px;
+    background:var(--grass-light);
+  }
+  .svc-card:nth-child(even)::before{ background:var(--yellow); }
+  .svc-card.fire::before{ background:var(--fire) !important; }
+  .svc-card h4{
+    font-family:var(--font-pixel); font-size:14px; margin-bottom:10px; color:#fff;
+  }
+  .svc-card p{ color:var(--text-dim); font-size:18px; margin-bottom:10px; }
+  .svc-card ul{ padding-left:20px; color:var(--text-dim); font-size:17px; }
+  .svc-card ul li{ margin-bottom:4px; }
+  .svc-card.wide{ grid-column: 1 / -1; }
+
+  /* highlight box for menus/tags */
+  .highlight-box{
+    margin-top:36px;
+    background:#1c1a19;
+    border:3px solid var(--gold);
+    padding:22px;
+  }
+  .highlight-box h4{ font-family:var(--font-pixel); font-size:13px; color:var(--gold); margin-bottom:10px; }
+  .tag-pill{
+    display:inline-block; background:#2a2724; border:2px solid var(--panel-shadow);
+    padding:4px 10px; margin:4px 6px 0 0; font-size:16px; color:var(--diamond);
+  }
+
+  /* ---------- Contact ---------- */
+  #contacto{ text-align:center; padding-bottom:90px; }
+  .crafting{
+    display:inline-block;
+    background:#1c1a19; border:4px solid var(--panel-shadow);
+    padding:36px 40px;
+  }
+  .discord-line{ font-size:22px; margin:14px 0 20px; color:#fff; }
+  .discord-line span{ color:var(--diamond); }
+  .copy-msg{ margin-top:10px; font-size:15px; color:var(--grass-light); height:18px; }
+
+  footer{
+    text-align:center; padding:22px; font-size:14px; color:var(--text-dim);
+    border-top:4px solid var(--panel-shadow); background:var(--bg-deep);
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">ALEXANDER</div>
+  <ul>
+    <li><button class="navlink active" data-page="inicio" onclick="showPage('inicio', this)">INICIO</button></li>
+    <li><button class="navlink" data-page="experiencia" onclick="showPage('experiencia', this)">EXPERIENCIA</button></li>
+    <li><button class="navlink" data-page="servicios" onclick="showPage('servicios', this)">SERVICIOS</button></li>
+    <li><button class="navlink" data-page="contacto" onclick="showPage('contacto', this)">CONTACTO</button></li>
+  </ul>
+</nav>
+
+<section id="inicio" class="page active">
+  <div class="avatar-stack">
+    <div class="voxel" style="background:#5d8c3f"></div>
+    <div class="voxel" style="background:#3a6b26"></div>
+    <div class="voxel" style="background:#ff5a1f"></div>
+    <div class="voxel" style="background:#55e6e6"></div>
+    <div class="voxel" style="background:#ffcc4d"></div>
+  </div>
+  <h1 class="hero-title">ALEXANDER</h1>
+  <div class="hero-sub">Minecraft Developer</div>
+  <p class="hero-tagline">Construyo networks, plugins y configuraciones a medida para servidores de Minecraft: desde el MOTD y el lobby hasta el balanceo de PvP y la optimización de TPS.</p>
+  <div class="hero-actions">
+    <button class="mc-btn yellow" onclick="showPage('servicios')">VER SERVICIOS</button>
+    <button class="mc-btn green" onclick="showPage('contacto')">CONTACTAR</button>
+  </div>
+</section>
+
+<section id="experiencia" class="page">
+  <div class="sec-title">EXPERIENCIA</div>
+  <p class="sec-desc">Historial trabajando como developer, founder y colaborador en distintos servidores, estudios y networks.</p>
+  <h3 style="font-family:var(--font-pixel); font-size:13px; color:var(--diamond); margin-bottom:14px;">SERVIDORES</h3>
+  <div class="exp-grid">
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Venifly</span><span class="item-role">Dev (cerrado)</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Minefark</span><span class="item-role">Colaborador</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">La Jerarquía</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">MineSkys</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Horizon Network</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">Hydroxmc</span><span class="item-role founder">Founder</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Mineblash</span><span class="item-role">Developer</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Infernium</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">Voltium</span><span class="item-role founder">Founder</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">Valkirian</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">FishMC</span><span class="item-role">Dev</span></div>
+      <div class="item-row"><span class="item-icon icon-star"></span><span class="item-name">OrtiMC</span><span class="item-role founder">Founder</span></div>
+      <div class="item-row"><span class="item-icon icon-book"></span><span class="item-name">RotiumMC</span><span class="item-role">Developer</span></div>
+      <div class="item-row"><span class="item-icon icon-anvil"></span><span class="item-name">VoidMc</span><span class="item-role">Developer</span></div>
+  </div>
+</section>
+
+<section id="servicios" class="page">
+  <div class="sec-title">SERVICIOS Y SETUPS</div>
+  <p class="sec-desc">Configuración y desarrollo a medida para distintas modalidades de servidor, además de identidad completa de network.</p>
+  <div class="svc-grid">
+    <div class="svc-card">
+      <h4>SURVIVAL</h4>
+      <p>Configuración avanzada de servidores survival, incluyendo la modalidad Survival OP desarrollada para Hydroxmc.</p>
+    </div>
+    <div class="svc-card">
+      <h4>BOXPVP</h4>
+      <p>Configuración completa de servidores BoxPvP: kits, arenas y balanceo de combate.</p>
+    </div>
+    <div class="svc-card">
+      <h4>PRACTICE</h4>
+      <p>Configuración de servidores PvP orientados a práctica y mejora de combate.</p>
+    </div>
+    <div class="svc-card">
+      <h4>OTRAS MODALIDADES</h4>
+      <p>Bedwars, Skywars, Gens, Prisión y cualquier modalidad adicional que necesite tu proyecto.</p>
+    </div>
+    <div class="svc-card wide">
+      <h4>ORTIMC NETWORK — IDENTIDAD DE NETWORK</h4>
+      <p>Conexión completa de la network, configuración del MOTD, logo y demás ajustes de marca en el server list.</p>
+      <ul>
+        <li>Menús</li>
+        <li>Optimización</li>
+        <li>Configuración de cualquier plugin</li>
+      </ul>
+    </div>
+    <div class="svc-card wide fire" style="border-color:var(--fire);">
+      <h4 style="color:var(--fire);">FULLPVP CUSTOM — CASO DE ÉXITO 🔥</h4>
+      <p>Un FullPvP custom con mobs personalizados e integraciones poco comunes en este tipo de modalidad. Superó las <strong style="color:var(--yellow);">1.3K descargas</strong> y a día de hoy sigue siendo usado por muchos servidores.</p>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">Mobs custom</span>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">Integraciones únicas</span>
+      <span class="tag-pill" style="border-color:var(--fire); color:var(--fire);">+1.3K descargas</span>
+    </div>
+    <div class="svc-card wide">
+      <h4>HORIZON NETWORK — OPTIMIZACIÓN</h4>
+      <p>Optimización de TPS reduciendo entidades para disminuir el lag.</p>
+      <ul>
+        <li>Menú del lobby</li>
+        <li>Menú de kits</li>
+        <li>NameTags</li>
+        <li>Configuraciones internas</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <h4>DESTACADOS: MENÚS Y /TAGS</h4>
+    <p style="color:var(--text-dim); font-size:18px; margin-bottom:6px;">Selección de los mejores menús desarrollados (selector de lobbys, panel de sanciones, tienda) y sistema de /tags configurable por rango.</p>
+    <span class="tag-pill">Selector de Lobbys</span>
+    <span class="tag-pill">Menú de Sanciones</span>
+    <span class="tag-pill">Sistema /tags</span>
+    <span class="tag-pill">Menú de kits</span>
+  </div>
+</section>
+
+<section id="contacto" class="page">
+  <div class="sec-title" style="justify-content:center;">CONTACTO</div>
+  <div class="crafting">
+    <p class="discord-line">Discord: <span id="discordTag">alex_dev_yt_gg</span></p>
+    <button class="mc-btn diamond" onclick="copyDiscord()">COPIAR DISCORD</button>
+    <div class="copy-msg" id="copyMsg"></div>
+  </div>
+</section>
+
+<footer>© 2026 Alexander - Minecraft Developer</footer>
+
+<script>
+function showPage(id, btn){
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+
+  document.querySelectorAll('.navlink').forEach(b => b.classList.remove('active'));
+  const target = btn || document.querySelector('.navlink[data-page="'+id+'"]');
+  if(target) target.classList.add('active');
+
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+function copyDiscord(){
+  const tag = document.getElementById('discordTag').innerText;
+  navigator.clipboard.writeText(tag).then(()=>{
+    const m = document.getElementById('copyMsg');
+    m.textContent = '¡Copiado!';
+    setTimeout(()=>{ m.textContent=''; }, 1800);
+  });
+}
+</script>
+
+</body>
+</html>
     font-size:20px;
     line-height:1.5;
     image-rendering:pixelated;
